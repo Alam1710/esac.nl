@@ -34,7 +34,7 @@ services:
   database:
     image: mysql:5.7
     volumes:
-      - esac_database:/var/lib/mysql
+      - esac_databas_local:/var/lib/mysql
     container_name: esac_database
     env_file:
       - .env
@@ -44,5 +44,5 @@ services:
     image: redis:3.0-alpine
 
 volumes:
-  esac_database:
+  esac_databas_local:
   laravel_public_folder:
