@@ -73,6 +73,17 @@ then
 
   lhci autorun --upload.serverBaseUrl="http://beta.esac.nl:9001" --upload.token="$LHCI_TOKEN"
 #  ssh deploy@esac.nl './update.sh' #account is not setup yet
+
+  if [[ $DEPLOYSTATUS == '0' ]]
+  then
+    curl -X POST -H "Content-Type: application/json" -d \
+    '{"state": "success", "target_url": "https://esac.nl", "description": "check https://esac.nl", "context": "Prod deployment successful"}' \
+    https://api.github.com/repos/esac-ic/esac.nl/statuses/$ORIGINAL_COMMIT\?access_token\=$github_token_wouter
+  else
+    curl -X POST -H "Content-Type: application/json" -d \
+    '{"state": "failure", "target_url": "", "description": "check https://esac.nl", "context": "Prod deployment failed"}' \
+    https://api.github.com/repos/esac-ic/esac.nl/statuses/$ORIGINAL_COMMIT\?access_token\=$github_token_wouter
+  fi
 fi
 
 
